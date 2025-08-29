@@ -13,16 +13,18 @@
         }
 
         :root {
-            --primary: #ff4500;
-            --secondary: #1a1a2e;
-            --accent: #16213e;
-            --text: #eee;
-            --gold: #ffd700;
+            --primary: #ffffff;
+            --secondary: #0a0a0a;
+            --accent: #808080;
+            --text: #ffffff;
+            --gray-light: #b0b0b0;
+            --gray-dark: #2a2a2a;
+            --glass: rgba(255, 255, 255, 0.1);
         }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a2e 100%);
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
             color: var(--text);
             min-height: 100vh;
             overflow-x: hidden;
@@ -39,8 +41,8 @@
             z-index: -1;
             opacity: 0.1;
             background-image: 
-                repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,69,0,.1) 35px, rgba(255,69,0,.1) 70px),
-                repeating-linear-gradient(-45deg, transparent, transparent 35px, rgba(255,215,0,.05) 35px, rgba(255,215,0,.05) 70px);
+                repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,255,255,.05) 35px, rgba(255,255,255,.05) 70px),
+                repeating-linear-gradient(-45deg, transparent, transparent 35px, rgba(128,128,128,.05) 35px, rgba(128,128,128,.05) 70px);
             animation: moveBackground 20s linear infinite;
         }
 
@@ -61,12 +63,13 @@
 
         .particle {
             position: absolute;
-            width: 4px;
-            height: 4px;
-            background: var(--primary);
+            width: 3px;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.8);
             border-radius: 50%;
             animation: float 15s infinite linear;
             opacity: 0;
+            box-shadow: 0 0 6px rgba(255, 255, 255, 0.3);
         }
 
         @keyframes float {
@@ -92,10 +95,11 @@
             top: 0;
             width: 100%;
             padding: 1rem 2rem;
-            background: rgba(26, 26, 46, 0.95);
-            backdrop-filter: blur(10px);
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
             z-index: 1000;
-            box-shadow: 0 2px 20px rgba(255, 69, 0, 0.3);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .nav-content {
@@ -109,15 +113,14 @@
         .logo {
             font-size: 1.5rem;
             font-weight: bold;
-            background: linear-gradient(45deg, var(--primary), var(--gold));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--primary);
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
             animation: glow 2s ease-in-out infinite alternate;
         }
 
         @keyframes glow {
-            from { text-shadow: 0 0 10px rgba(255, 69, 0, 0.5); }
-            to { text-shadow: 0 0 20px rgba(255, 69, 0, 0.8), 0 0 30px rgba(255, 215, 0, 0.5); }
+            from { text-shadow: 0 0 10px rgba(255, 255, 255, 0.3); }
+            to { text-shadow: 0 0 20px rgba(255, 255, 255, 0.5), 0 0 30px rgba(255, 255, 255, 0.3); }
         }
 
         /* Hero Section */
@@ -133,6 +136,7 @@
             color: var(--primary);
             animation: pulse 2s infinite;
             margin-bottom: 2rem;
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.2));
         }
 
         @keyframes pulse {
@@ -144,9 +148,8 @@
         h1 {
             font-size: 3.5rem;
             margin-bottom: 1rem;
-            background: linear-gradient(45deg, var(--primary), var(--gold));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--primary);
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
             animation: slideInFromTop 1s ease-out;
         }
 
@@ -163,7 +166,7 @@
 
         .subtitle {
             font-size: 1.5rem;
-            color: var(--gold);
+            color: var(--gray-light);
             margin-bottom: 2rem;
             animation: slideInFromBottom 1s ease-out;
         }
@@ -194,9 +197,9 @@
         }
 
         .card {
-            background: linear-gradient(135deg, rgba(255, 69, 0, 0.1), rgba(26, 26, 46, 0.9));
-            border: 1px solid rgba(255, 69, 0, 0.3);
-            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
             padding: 2rem;
             backdrop-filter: blur(10px);
             transition: all 0.3s ease;
@@ -212,7 +215,7 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255, 69, 0, 0.1), transparent);
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
             transform: rotate(45deg);
             transition: all 0.5s;
             opacity: 0;
@@ -248,14 +251,15 @@
         }
 
         .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(255, 69, 0, 0.3);
-            border-color: var(--primary);
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.08);
         }
 
         .card-title {
             font-size: 1.5rem;
-            color: var(--gold);
+            color: var(--primary);
             margin-bottom: 1rem;
             display: flex;
             align-items: center;
@@ -263,7 +267,7 @@
         }
 
         .card-icon {
-            color: var(--primary);
+            color: var(--gray-light);
         }
 
         /* Social Links */
@@ -280,8 +284,8 @@
             align-items: center;
             gap: 0.5rem;
             padding: 1rem 2rem;
-            background: linear-gradient(135deg, rgba(255, 69, 0, 0.2), rgba(26, 26, 46, 0.9));
-            border: 2px solid var(--primary);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 50px;
             text-decoration: none;
             color: var(--text);
@@ -297,7 +301,7 @@
             left: 50%;
             width: 0;
             height: 0;
-            background: rgba(255, 69, 0, 0.5);
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 50%;
             transform: translate(-50%, -50%);
             transition: width 0.5s, height 0.5s;
@@ -310,8 +314,30 @@
 
         .social-link:hover {
             transform: scale(1.1);
-            box-shadow: 0 10px 30px rgba(255, 69, 0, 0.5);
-            border-color: var(--gold);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border-color: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Special hover effects for different platforms */
+        .social-link[data-platform="instagram"]:hover {
+            background: linear-gradient(135deg, rgba(131, 58, 180, 0.2), rgba(253, 29, 29, 0.2), rgba(252, 176, 69, 0.2));
+            border-color: #E4405F;
+        }
+
+        .social-link[data-platform="snapchat"]:hover {
+            background: rgba(255, 252, 0, 0.1);
+            border-color: #FFFC00;
+        }
+
+        .social-link[data-platform="discord"]:hover {
+            background: rgba(88, 101, 242, 0.2);
+            border-color: #5865F2;
+        }
+
+        .social-link[data-platform="steam"]:hover {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.3), rgba(27, 40, 56, 0.3));
+            border-color: #171a21;
         }
 
         .social-link i {
@@ -326,17 +352,18 @@
 
         /* Skills Section */
         .skills {
-            background: linear-gradient(135deg, rgba(22, 33, 62, 0.9), rgba(26, 26, 46, 0.9));
-            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 30px;
             padding: 3rem;
             margin: 3rem 0;
-            border: 1px solid rgba(255, 215, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
         }
 
         .skills-title {
             text-align: center;
             font-size: 2rem;
-            color: var(--gold);
+            color: var(--primary);
             margin-bottom: 2rem;
         }
 
@@ -347,11 +374,11 @@
         }
 
         .skill-item {
-            background: linear-gradient(135deg, rgba(255, 69, 0, 0.1), rgba(0, 0, 0, 0.5));
+            background: rgba(255, 255, 255, 0.05);
             padding: 1.5rem;
-            border-radius: 10px;
+            border-radius: 15px;
             text-align: center;
-            border: 1px solid rgba(255, 69, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
@@ -364,7 +391,7 @@
             left: 0;
             width: 100%;
             height: 3px;
-            background: linear-gradient(90deg, var(--primary), var(--gold));
+            background: linear-gradient(90deg, var(--gray-light), var(--primary));
             transform: scaleX(0);
             transition: transform 0.3s ease;
         }
@@ -375,13 +402,14 @@
 
         .skill-item:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(255, 69, 0, 0.3);
-            background: linear-gradient(135deg, rgba(255, 69, 0, 0.2), rgba(0, 0, 0, 0.7));
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.08);
         }
 
         .skill-item i {
             font-size: 2rem;
-            color: var(--primary);
+            color: var(--gray-light);
             margin-bottom: 0.5rem;
         }
 
@@ -389,23 +417,24 @@
         .about {
             text-align: center;
             padding: 3rem;
-            background: linear-gradient(135deg, rgba(255, 69, 0, 0.05), rgba(26, 26, 46, 0.9));
-            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 30px;
             margin: 3rem 0;
-            border: 1px solid rgba(255, 215, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             position: relative;
+            backdrop-filter: blur(10px);
         }
 
         .about h2 {
             font-size: 2rem;
-            color: var(--gold);
+            color: var(--primary);
             margin-bottom: 1.5rem;
         }
 
         .about p {
             font-size: 1.2rem;
             line-height: 1.8;
-            color: #ccc;
+            color: rgba(255, 255, 255, 0.8);
             max-width: 800px;
             margin: 0 auto;
         }
@@ -416,7 +445,7 @@
             align-items: center;
             gap: 1rem;
             padding: 1.5rem 3rem;
-            background: linear-gradient(135deg, var(--primary), #ff6b35);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
             color: white;
             text-decoration: none;
             border-radius: 50px;
@@ -424,9 +453,10 @@
             font-weight: bold;
             margin: 2rem 0;
             transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(255, 69, 0, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             position: relative;
             overflow: hidden;
+            border: 2px solid rgba(255, 255, 255, 0.2);
         }
 
         .store-btn::before {
@@ -436,7 +466,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
             transition: left 0.5s;
         }
 
@@ -445,27 +475,30 @@
         }
 
         .store-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 15px 40px rgba(255, 69, 0, 0.5);
+            transform: scale(1.05) translateY(-3px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.08));
+            border-color: rgba(255, 255, 255, 0.4);
         }
 
         /* Footer */
         footer {
             text-align: center;
             padding: 2rem;
-            border-top: 1px solid rgba(255, 69, 0, 0.3);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
             margin-top: 4rem;
-            background: rgba(26, 26, 46, 0.9);
+            background: rgba(10, 10, 10, 0.95);
         }
 
         .footer-text {
-            color: #999;
+            color: rgba(255, 255, 255, 0.6);
             font-size: 0.9rem;
         }
 
         .heart {
-            color: var(--primary);
+            color: var(--gray-light);
             animation: heartbeat 1.5s infinite;
+            font-size: 1.2rem;
         }
 
         @keyframes heartbeat {
@@ -492,6 +525,10 @@
                 width: 250px;
                 justify-content: center;
             }
+            
+            .skills-grid {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            }
         }
 
         /* Loading Animation */
@@ -501,7 +538,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: var(--secondary);
+            background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -512,10 +549,11 @@
         .loader-wheel {
             width: 100px;
             height: 100px;
-            border: 5px solid rgba(255, 69, 0, 0.3);
+            border: 5px solid rgba(255, 255, 255, 0.1);
             border-top: 5px solid var(--primary);
             border-radius: 50%;
             animation: spin 1s linear infinite;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
         }
 
         @keyframes spin {
@@ -548,8 +586,8 @@
         <div class="nav-content">
             <div class="logo">MAJD</div>
             <div style="display: flex; gap: 1rem;">
-                <i class="fas fa-motorcycle" style="color: var(--primary); font-size: 1.5rem;"></i>
-                <i class="fas fa-car" style="color: var(--gold); font-size: 1.5rem;"></i>
+                <i class="fas fa-motorcycle" style="color: var(--gray-light); font-size: 1.5rem;"></i>
+                <i class="fas fa-car" style="color: var(--gray-light); font-size: 1.5rem;"></i>
             </div>
         </div>
     </nav>
@@ -560,7 +598,7 @@
             <i class="fas fa-motorcycle"></i>
         </div>
         <h1>مجد</h1>
-        <p class="subtitle">مبرمج | عاشق السيارات والدراجات</p>
+        <p class="subtitle">مبرمج | عاشق السيارات والدراجات 🚀</p>
     </section>
 
     <!-- Main Content -->
@@ -652,17 +690,24 @@
 
         <!-- Social Links -->
         <div class="social-links">
-            <a href="https://instagram.com/majd.gl" target="_blank" class="social-link">
+            <a href="https://instagram.com/majd.gl" target="_blank" class="social-link" data-platform="instagram">
                 <i class="fab fa-instagram"></i>
                 <span>majd.gl</span>
             </a>
-            <a href="https://snapchat.com/add/majd.khl" target="_blank" class="social-link">
+            
+            <a href="https://snapchat.com/add/majd.khl" target="_blank" class="social-link" data-platform="snapchat">
                 <i class="fab fa-snapchat"></i>
                 <span>majd.khl</span>
             </a>
-            <a href="https://discord.com/users/shn0ob" target="_blank" class="social-link">
+            
+            <a href="https://discord.com/users/shn0ob" target="_blank" class="social-link" data-platform="discord">
                 <i class="fab fa-discord"></i>
                 <span>shn0ob</span>
+            </a>
+            
+            <a href="https://steamcommunity.com/profiles/76561198415999881/" target="_blank" class="social-link" data-platform="steam">
+                <i class="fab fa-steam"></i>
+                <span>Steam Profile</span>
             </a>
         </div>
 
@@ -730,4 +775,3 @@
     </script>
 </body>
 </html>
-
