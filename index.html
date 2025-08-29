@@ -1,4 +1,72 @@
-<!DOCTYPE html>
+<script>
+        // Create floating particles
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 20; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 15 + 's';
+            particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+            particlesContainer.appendChild(particle);
+        }
+
+        // Steam Modal Functions
+        function openSteamModal(event) {
+            event.preventDefault();
+            document.getElementById('steamModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSteamModal() {
+            document.getElementById('steamModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('steamModal');
+            if (event.target == modal) {
+                closeSteamModal();
+            }
+        }
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Remove loader after page loads
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.querySelector('.loader').style.display = 'none';
+            }, 2500);
+        });
+
+        // Add typing effect to title
+        const title = document.querySelector('h1');
+        const text = title.textContent;
+        title.textContent = '';
+        let i = 0;
+        
+        setTimeout(() => {
+            const typing = setInterval(() => {
+                if (i < text.length) {
+                    title.textContent += text.charAt(i);
+                    i++;
+                } else {
+                    clearInterval(typing);
+                }
+            }, 150);
+        }, 2500);
+    </script><!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -129,6 +197,50 @@
             padding: 4rem 2rem;
             text-align: center;
             position: relative;
+        }
+
+        .hero-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .profile-images {
+            display: flex;
+            gap: 1rem;
+            position: relative;
+        }
+
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 15px;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            object-fit: cover;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .profile-img:hover {
+            transform: scale(1.05) rotate(-5deg);
+            border-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+        }
+
+        .profile-img:nth-child(2) {
+            transform: rotate(5deg);
+        }
+
+        .profile-img:nth-child(2):hover {
+            transform: scale(1.05) rotate(5deg);
+        }
+
+        .hero-text {
+            flex: 1;
+            min-width: 300px;
         }
 
         .motor-icon {
@@ -409,8 +521,13 @@
 
         .skill-item i {
             font-size: 2rem;
-            color: var(--gray-light);
             margin-bottom: 0.5rem;
+            filter: drop-shadow(0 0 10px currentColor);
+            transition: all 0.3s ease;
+        }
+
+        .skill-item:hover i {
+            transform: scale(1.2);
         }
 
         /* About Section */
@@ -506,29 +623,227 @@
             50% { transform: scale(1.2); }
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2.5rem;
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.9);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #1b2838 0%, #171a21 100%);
+            margin: 2% auto;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 90%;
+            max-width: 900px;
+            border-radius: 20px;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
             }
-            
-            .subtitle {
-                font-size: 1.2rem;
+            to {
+                transform: translateY(0);
+                opacity: 1;
             }
-            
-            .social-links {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .social-link {
-                width: 250px;
-                justify-content: center;
-            }
-            
-            .skills-grid {
-                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            }
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close:hover {
+            color: #fff;
+        }
+
+        .steam-header {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .steam-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 10px;
+            border: 3px solid #66c0f4;
+        }
+
+        .steam-info h2 {
+            font-size: 2rem;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+
+        .steam-status {
+            color: #57cbde;
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .steam-game {
+            color: #8cc53f;
+            font-size: 0.9rem;
+        }
+
+        .steam-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-box {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid rgba(102, 192, 244, 0.2);
+        }
+
+        .stat-box h3 {
+            font-size: 2rem;
+            color: #66c0f4;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-box p {
+            color: #b8b6b4;
+            font-size: 0.9rem;
+        }
+
+        .recent-games {
+            margin-bottom: 2rem;
+        }
+
+        .recent-games h3 {
+            color: #fff;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .game-item {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+
+        .game-item:hover {
+            transform: scale(1.05);
+        }
+
+        .game-item img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+        }
+
+        .game-item p {
+            padding: 0.5rem;
+            color: #fff;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .achievements-showcase {
+            margin-bottom: 2rem;
+        }
+
+        .achievements-showcase h3 {
+            color: #fff;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .achievements-grid {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .achievement-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 5px;
+            border: 2px solid rgba(102, 192, 244, 0.3);
+            transition: all 0.3s;
+        }
+
+        .achievement-icon:hover {
+            border-color: #66c0f4;
+            transform: scale(1.1);
+        }
+
+        .view-full-profile {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, #66c0f4, #4a7fb8);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            margin-top: 1rem;
+        }
+
+        .view-full-profile:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(102, 192, 244, 0.3);
+        }
+
+        /* Scrollbar for modal */
+        .modal-content::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .modal-content::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+        }
+
+        .modal-content::-webkit-scrollbar-thumb {
+            background: #66c0f4;
+            border-radius: 10px;
+        }
+
+        .modal-content::-webkit-scrollbar-thumb:hover {
+            background: #4a7fb8;
         }
 
         /* Loading Animation */
@@ -594,11 +909,22 @@
 
     <!-- Hero Section -->
     <section class="hero">
-        <div class="motor-icon">
-            <i class="fas fa-motorcycle"></i>
+        <div class="hero-content">
+            <div class="profile-images">
+                <!-- ضع روابط صورك هنا - Replace with your image URLs -->
+                <img src="https://f.top4top.io/p_35287ul4e1.png" alt="Majd" class="profile-img">
+                <img src="https://g.top4top.io/p_3528b8cqd1.jpg" alt="Majd" class="profile-img">
+                <img src="https://i.top4top.io/p_352814mah1.png" alt="Majd" class="profile-img">
+
+            </div>
+            <div class="hero-text">
+                <div class="motor-icon">
+                    <i class="fas fa-motorcycle"></i>
+                </div>
+                <h1>مجد</h1>
+                <p class="subtitle">مبرمج | عاشق السيارات والدراجات 🚀</p>
+            </div>
         </div>
-        <h1>مجد</h1>
-        <p class="subtitle">مبرمج | عاشق السيارات والدراجات 🚀</p>
     </section>
 
     <!-- Main Content -->
@@ -654,35 +980,35 @@
             <h2 class="skills-title">المهارات التقنية</h2>
             <div class="skills-grid">
                 <div class="skill-item">
-                    <i class="fab fa-html5"></i>
+                    <i class="fab fa-html5" style="color: #E34C26;"></i>
                     <p>HTML</p>
                 </div>
                 <div class="skill-item">
-                    <i class="fab fa-java"></i>
+                    <i class="fab fa-java" style="color: #007396;"></i>
                     <p>Java</p>
                 </div>
                 <div class="skill-item">
-                    <i class="fas fa-database"></i>
+                    <i class="fas fa-database" style="color: #336791;"></i>
                     <p>SQL</p>
                 </div>
                 <div class="skill-item">
-                    <i class="fab fa-windows"></i>
+                    <i class="fab fa-windows" style="color: #0078D6;"></i>
                     <p>Windows</p>
                 </div>
                 <div class="skill-item">
-                    <i class="fab fa-linux"></i>
+                    <i class="fab fa-linux" style="color: #FCC624;"></i>
                     <p>Linux</p>
                 </div>
                 <div class="skill-item">
-                    <i class="fas fa-shield-alt"></i>
+                    <i class="fas fa-shield-alt" style="color: #4CAF50;"></i>
                     <p>Security</p>
                 </div>
                 <div class="skill-item">
-                    <i class="fas fa-lock"></i>
+                    <i class="fas fa-lock" style="color: #9C27B0;"></i>
                     <p>Privacy</p>
                 </div>
                 <div class="skill-item">
-                    <i class="fas fa-laptop-code"></i>
+                    <i class="fas fa-laptop-code" style="color: #61DAFB;"></i>
                     <p>Front-End</p>
                 </div>
             </div>
@@ -705,10 +1031,82 @@
                 <span>shn0ob</span>
             </a>
             
-            <a href="https://steamcommunity.com/profiles/76561198415999881/" target="_blank" class="social-link" data-platform="steam">
+            <a href="#" class="social-link" data-platform="steam" onclick="openSteamModal(event)">
                 <i class="fab fa-steam"></i>
                 <span>Steam Profile</span>
             </a>
+        </div>
+
+        <!-- Steam Modal -->
+        <div id="steamModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeSteamModal()">&times;</span>
+                <div class="steam-header">
+                    <img src="https://avatars.steamstatic.com/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_full.jpg" alt="Avatar" class="steam-avatar">
+                    <div class="steam-info">
+                        <h2>Shnoob</h2>
+                        <p class="steam-status">🟢 Currently In-Game</p>
+                        <p class="steam-game">Playing: Arma 3</p>
+                    </div>
+                </div>
+                
+                <div class="steam-stats">
+                    <div class="stat-box">
+                        <h3>27</h3>
+                        <p>Games Owned</p>
+                    </div>
+                    <div class="stat-box">
+                        <h3>967</h3>
+                        <p>Achievements</p>
+                    </div>
+                    <div class="stat-box">
+                        <h3>119</h3>
+                        <p>Total Hours</p>
+                    </div>
+                    <div class="stat-box">
+                        <h3>8</h3>
+                        <p>Level</p>
+                    </div>
+                </div>
+
+                <div class="recent-games">
+                    <h3>Recent Games</h3>
+                    <div class="games-grid">
+                        <div class="game-item">
+                            <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/107410/header.jpg" alt="Arma 3">
+                            <p>Arma 3</p>
+                        </div>
+                        <div class="game-item">
+                            <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/730/header.jpg" alt="CS2">
+                            <p>CS2</p>
+                        </div>
+                        <div class="game-item">
+                            <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/header.jpg" alt="Elden Ring">
+                            <p>Elden Ring</p>
+                        </div>
+                        <div class="game-item">
+                            <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/271590/header.jpg" alt="GTA V">
+                            <p>GTA V</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="achievements-showcase">
+                    <h3>Achievement Showcase</h3>
+                    <div class="achievements-grid">
+                        <img src="https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/730/c10daf996eaf22bd87e83f7ac7e721f88e80c665.jpg" alt="Achievement" class="achievement-icon">
+                        <img src="https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/730/9b1c0c0b35b96c8c3e3e8e7e0e8e8e8e8e8e8e8e.jpg" alt="Achievement" class="achievement-icon">
+                        <img src="https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/730/achievement_icon.jpg" alt="Achievement" class="achievement-icon">
+                        <img src="https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/730/achievement_icon2.jpg" alt="Achievement" class="achievement-icon">
+                        <img src="https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/730/achievement_icon3.jpg" alt="Achievement" class="achievement-icon">
+                        <img src="https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/730/achievement_icon4.jpg" alt="Achievement" class="achievement-icon">
+                    </div>
+                </div>
+
+                <a href="https://steamcommunity.com/profiles/76561198415999881/" target="_blank" class="view-full-profile">
+                    <i class="fab fa-steam"></i> View Full Profile on Steam
+                </a>
+            </div>
         </div>
 
         <!-- Store Button -->
