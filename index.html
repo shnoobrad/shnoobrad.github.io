@@ -1,5 +1,4 @@
 <script>
-        // Create floating particles
         const particlesContainer = document.getElementById('particles');
         for (let i = 0; i < 20; i++) {
             const particle = document.createElement('div');
@@ -10,7 +9,6 @@
             particlesContainer.appendChild(particle);
         }
 
-        // Steam Modal Functions
         function openSteamModal(event) {
             event.preventDefault();
             document.getElementById('steamModal').style.display = 'block';
@@ -30,7 +28,6 @@
             }
         }
 
-        // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -43,14 +40,12 @@
             });
         });
 
-        // Remove loader after page loads
         window.addEventListener('load', () => {
             setTimeout(() => {
                 document.querySelector('.loader').style.display = 'none';
             }, 2500);
         });
 
-        // Add typing effect to title
         const title = document.querySelector('h1');
         const text = title.textContent;
         title.textContent = '';
@@ -99,7 +94,6 @@
             position: relative;
         }
 
-        /* Animated Background */
         .bg-animation {
             position: fixed;
             width: 100%;
@@ -119,7 +113,6 @@
             100% { transform: translate(50px, 50px); }
         }
 
-        /* Floating Particles */
         .particles {
             position: fixed;
             top: 0;
@@ -157,7 +150,6 @@
             }
         }
 
-        /* Navigation */
         nav {
             position: fixed;
             top: 0;
@@ -191,7 +183,6 @@
             to { text-shadow: 0 0 20px rgba(255, 255, 255, 0.5), 0 0 30px rgba(255, 255, 255, 0.3); }
         }
 
-        /* Hero Section */
         .hero {
             margin-top: 80px;
             padding: 4rem 2rem;
@@ -294,7 +285,6 @@
             }
         }
 
-        /* Info Cards */
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -431,7 +421,6 @@
             background: rgba(255, 255, 255, 0.1);
         }
 
-        /* Special hover effects for different platforms */
         .social-link[data-platform="instagram"]:hover {
             background: linear-gradient(135deg, rgba(131, 58, 180, 0.2), rgba(253, 29, 29, 0.2), rgba(252, 176, 69, 0.2));
             border-color: #E4405F;
@@ -462,7 +451,6 @@
             font-weight: bold;
         }
 
-        /* Skills Section */
         .skills {
             background: rgba(255, 255, 255, 0.03);
             border-radius: 30px;
@@ -530,7 +518,6 @@
             transform: scale(1.2);
         }
 
-        /* About Section */
         .about {
             text-align: center;
             padding: 3rem;
@@ -556,7 +543,6 @@
             margin: 0 auto;
         }
 
-        /* Store Button */
         .store-btn {
             display: inline-flex;
             align-items: center;
@@ -623,7 +609,6 @@
             50% { transform: scale(1.2); }
         }
 
-        /* Modal Styles */
         .modal {
             display: none;
             position: fixed;
@@ -827,7 +812,6 @@
             box-shadow: 0 10px 30px rgba(102, 192, 244, 0.3);
         }
 
-        /* Scrollbar for modal */
         .modal-content::-webkit-scrollbar {
             width: 10px;
         }
@@ -846,7 +830,6 @@
             background: #4a7fb8;
         }
 
-        /* Loading Animation */
         .loader {
             position: fixed;
             top: 0;
@@ -885,21 +868,17 @@
     </style>
 </head>
 <body>
-    <!-- Loading Screen -->
     <div class="loader">
         <div class="loader-wheel"></div>
     </div>
 
-    <!-- Animated Background -->
     <div class="bg-animation"></div>
     
-    <!-- Particles -->
     <div class="particles" id="particles"></div>
 
-    <!-- Navigation -->
     <nav>
         <div class="nav-content">
-            <div class="logo">مجد</div>
+            <div class="logo">مجد رعد(shnoob)</div>
             <div style="display: flex; gap: 1rem;">
                 <i class="fas fa-motorcycle" style="color: var(--gray-light); font-size: 1.5rem;"></i>
                 <i class="fas fa-car" style="color: var(--gray-light); font-size: 1.5rem;"></i>
@@ -907,11 +886,9 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
             <div class="profile-images">
-                <!-- ضع روابط صورك هنا - Replace with your image URLs -->
                 <img src="https://f.top4top.io/p_35287ul4e1.png" alt="Majd" class="profile-img">
                 <img src="https://g.top4top.io/p_3528b8cqd1.jpg" alt="Majd" class="profile-img">
                 <img src="https://i.top4top.io/p_352814mah1.png" alt="Majd" class="profile-img">
@@ -922,14 +899,12 @@
                     <i class="fas fa-motorcycle"></i>
                 </div>
                 <h1>مجد</h1>
-                <p class="subtitle">مبرمج | عاشق السيارات والدراجات 🚀</p>
+                <p class="subtitle">مبرمج | عاشق السيارات والدراجات </p>
             </div>
         </div>
     </section>
 
-    <!-- Main Content -->
     <div class="container">
-        <!-- Info Cards -->
         <div class="info-grid">
             <div class="card">
                 <h3 class="card-title">
@@ -964,7 +939,6 @@
             </div>
         </div>
 
-        <!-- About Section -->
         <div class="about">
             <h2>نبذة عني</h2>
             <p>
@@ -975,7 +949,6 @@
             </p>
         </div>
 
-        <!-- Skills Section -->
         <div class="skills">
             <h2 class="skills-title">المهارات التقنية</h2>
             <div class="skills-grid">
@@ -1014,7 +987,6 @@
             </div>
         </div>
 
-        <!-- Social Links -->
         <div class="social-links">
             <a href="https://instagram.com/majd.gl" target="_blank" class="social-link" data-platform="instagram">
                 <i class="fab fa-instagram"></i>
@@ -1037,7 +1009,6 @@
             </a>
         </div>
 
-        <!-- Steam Modal -->
         <div id="steamModal" class="modal">
             <div class="modal-content">
                 <span class="close" onclick="closeSteamModal()">&times;</span>
@@ -1118,7 +1089,6 @@
         </div>
     </div>
 
-    <!-- Footer -->
     <footer>
         <p class="footer-text">
             صُنع بـ <span class="heart">❤️</span> بواسطة مجد © 2025
@@ -1126,7 +1096,6 @@
     </footer>
 
     <script>
-        // Create floating particles
         const particlesContainer = document.getElementById('particles');
         for (let i = 0; i < 20; i++) {
             const particle = document.createElement('div');
@@ -1137,7 +1106,6 @@
             particlesContainer.appendChild(particle);
         }
 
-        // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -1147,14 +1115,12 @@
             });
         });
 
-        // Remove loader after page loads
         window.addEventListener('load', () => {
             setTimeout(() => {
                 document.querySelector('.loader').style.display = 'none';
             }, 2500);
         });
 
-        // Add typing effect to title
         const title = document.querySelector('h1');
         const text = title.textContent;
         title.textContent = '';
