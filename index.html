@@ -28,7 +28,6 @@
             cursor: none;
         }
 
-        /* Custom Cursor */
         .cursor {
             width: 20px;
             height: 20px;
@@ -36,9 +35,9 @@
             border-radius: 50%;
             position: fixed;
             pointer-events: none;
-            transition: all 0.1s ease;
             z-index: 10000;
             mix-blend-mode: difference;
+            transform: translate(-50%, -50%);
         }
 
         .cursor-follower {
@@ -48,11 +47,20 @@
             border-radius: 50%;
             position: fixed;
             pointer-events: none;
-            transition: all 0.3s ease;
             z-index: 9999;
+            transform: translate(-50%, -50%);
         }
 
-        /* Preloader */
+        .cursor.hover {
+            transform: translate(-50%, -50%) scale(2);
+            transition: transform 0.2s ease;
+        }
+
+        .cursor-follower.hover {
+            transform: translate(-50%, -50%) scale(1.5);
+            transition: transform 0.2s ease;
+        }
+
         .preloader {
             position: fixed;
             top: 0;
@@ -120,7 +128,6 @@
             to { width: 100%; }
         }
 
-        /* Navigation */
         nav {
             position: fixed;
             top: 0;
@@ -186,7 +193,6 @@
             width: 100%;
         }
 
-        /* Hero Section */
         .hero {
             height: 100vh;
             display: flex;
@@ -343,7 +349,6 @@
             left: 0;
         }
 
-        /* About Section */
         .section {
             padding: 100px 4rem;
             max-width: 1400px;
@@ -415,7 +420,6 @@
             margin-bottom: 1.5rem;
         }
 
-        /* Skills Section */
         .skills-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -485,7 +489,6 @@
             }
         }
 
-        /* Contact Section */
         .contact-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -529,7 +532,6 @@
             opacity: 1;
         }
 
-        /* Footer */
         footer {
             padding: 3rem;
             text-align: center;
@@ -542,7 +544,6 @@
             opacity: 0.5;
         }
 
-        /* Scroll Reveal */
         .reveal {
             opacity: 0;
             transform: translateY(50px);
@@ -554,7 +555,6 @@
             transform: translateY(0);
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
             nav {
                 padding: 1rem 2rem;
@@ -581,15 +581,22 @@
             .section {
                 padding: 50px 2rem;
             }
+
+            body {
+                cursor: auto;
+            }
+
+            .cursor,
+            .cursor-follower {
+                display: none;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Custom Cursor -->
     <div class="cursor"></div>
     <div class="cursor-follower"></div>
 
-    <!-- Preloader -->
     <div class="preloader">
         <div class="loader-content">
             <div class="loader-text">
@@ -604,7 +611,6 @@
         </div>
     </div>
 
-    <!-- Navigation -->
     <nav id="navbar">
         <div class="nav-container">
             <div class="logo">MAJD</div>
@@ -617,7 +623,6 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
     <section id="home" class="hero">
         <div class="floating-shapes">
             <div class="shape"></div>
@@ -631,7 +636,6 @@
         </div>
     </section>
 
-    <!-- About Section -->
     <section id="about" class="section reveal">
         <h2 class="section-title">نبذة عني</h2>
         <div class="about-container">
@@ -648,7 +652,6 @@
         </div>
     </section>
 
-    <!-- Skills Section -->
     <section id="skills" class="section reveal">
         <h2 class="section-title">المهارات</h2>
         <div class="skills-grid">
@@ -697,7 +700,6 @@
         </div>
     </section>
 
-    <!-- Contact Section -->
     <section id="contact" class="section reveal">
         <h2 class="section-title">التواصل</h2>
         <div class="contact-container">
@@ -724,47 +726,59 @@
         </div>
     </section>
 
-    <!-- Footer -->
     <footer>
         <p class="footer-text">© 2025 MAJD. All rights reserved.</p>
     </footer>
 
     <script>
-        // Preloader
         window.addEventListener('load', () => {
             setTimeout(() => {
                 document.querySelector('.preloader').classList.add('hide');
             }, 2500);
         });
 
-        // Custom Cursor
         const cursor = document.querySelector('.cursor');
         const follower = document.querySelector('.cursor-follower');
+        
+        let mouseX = 0;
+        let mouseY = 0;
+        let cursorX = 0;
+        let cursorY = 0;
+        let followerX = 0;
+        let followerY = 0;
 
         document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-            
-            setTimeout(() => {
-                follower.style.left = e.clientX - 10 + 'px';
-                follower.style.top = e.clientY - 10 + 'px';
-            }, 100);
+            mouseX = e.clientX;
+            mouseY = e.clientY;
         });
 
-        // Cursor hover effect
+        function animate() {
+            cursorX = mouseX;
+            cursorY = mouseY;
+            cursor.style.left = cursorX + 'px';
+            cursor.style.top = cursorY + 'px';
+            
+            followerX += (mouseX - followerX) * 0.15;
+            followerY += (mouseY - followerY) * 0.15;
+            follower.style.left = followerX + 'px';
+            follower.style.top = followerY + 'px';
+            
+            requestAnimationFrame(animate);
+        }
+        animate();
+
         const links = document.querySelectorAll('a, .skill-card, .contact-card');
         links.forEach(link => {
             link.addEventListener('mouseenter', () => {
-                cursor.style.transform = 'scale(2)';
-                follower.style.transform = 'scale(1.5)';
+                cursor.classList.add('hover');
+                follower.classList.add('hover');
             });
             link.addEventListener('mouseleave', () => {
-                cursor.style.transform = 'scale(1)';
-                follower.style.transform = 'scale(1)';
+                cursor.classList.remove('hover');
+                follower.classList.remove('hover');
             });
         });
 
-        // Navigation scroll effect
         window.addEventListener('scroll', () => {
             const navbar = document.getElementById('navbar');
             if (window.scrollY > 50) {
@@ -774,7 +788,6 @@
             }
         });
 
-        // Smooth scrolling
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -788,7 +801,6 @@
             });
         });
 
-        // Reveal on scroll
         const reveals = document.querySelectorAll('.reveal');
         
         function revealOnScroll() {
@@ -804,9 +816,8 @@
         }
 
         window.addEventListener('scroll', revealOnScroll);
-        revealOnScroll(); // Initial check
+        revealOnScroll();
 
-        // Parallax effect for shapes
         window.addEventListener('scroll', () => {
             const shapes = document.querySelectorAll('.shape');
             const scrolled = window.pageYOffset;
@@ -817,7 +828,6 @@
             });
         });
 
-        // Text animation on hover
         const heroTitle = document.querySelector('.hero-title');
         if (heroTitle) {
             heroTitle.addEventListener('mouseenter', () => {
