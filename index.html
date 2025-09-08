@@ -829,7 +829,7 @@
     </div>
 
     <audio id="backgroundMusic" loop>
-        <source src="https://soundcloud.com/shnoob-480094953/ya-lyublyu-tebya-no-ne-vstanu" type="audio/mpeg">
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
         <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
     </audio>
 
@@ -983,60 +983,89 @@
         <p class="footer-text">© 2025 MAJD. All rights reserved.</p>
     </footer>
 
+    <script src="https://w.soundcloud.com/player/api.js"></script>
     <script>
-        const audio = document.getElementById('backgroundMusic');
-        const playPauseBtn = document.getElementById('playPauseBtn');
-        const playPauseIcon = document.getElementById('playPauseIcon');
-        const volumeSlider = document.getElementById('volumeSlider');
-        const audioControls = document.getElementById('audioControls');
-        const welcomeOverlay = document.getElementById('welcomeOverlay');
-        const enterBtn = document.getElementById('enterBtn');
+        let widget = null;
+        let playPauseBtn;
+        let playPauseIcon;
+        let volumeSlider;
+        let audioControls;
+        let welcomeOverlay;
+        let enterBtn;
 
-        audio.volume = 0.3;
-        audioControls.style.display = 'none';
+        // Wait for DOM to load
+        document.addEventListener('DOMContentLoaded', function() {
+            playPauseBtn = document.getElementById('playPauseBtn');
+            playPauseIcon = document.getElementById('playPauseIcon');
+            volumeSlider = document.getElementById('volumeSlider');
+            audioControls = document.getElementById('audioControls');
+            welcomeOverlay = document.getElementById('welcomeOverlay');
+            enterBtn = document.getElementById('enterBtn');
 
-        enterBtn.addEventListener('click', () => {
-            welcomeOverlay.classList.add('hidden');
-            setTimeout(() => {
-                welcomeOverlay.style.display = 'none';
-                audioControls.style.display = 'flex';
-                audio.play().catch(e => console.log('Audio play failed:', e));
-            }, 1000);
-        });
+            audioControls.style.display = 'none';
 
-        playPauseBtn.addEventListener('click', () => {
-            if (audio.paused) {
-                audio.play();
-                playPauseIcon.classList.remove('fa-play');
-                playPauseIcon.classList.add('fa-pause');
-                audioControls.classList.remove('paused');
-            } else {
-                audio.pause();
-                playPauseIcon.classList.remove('fa-pause');
-                playPauseIcon.classList.add('fa-play');
-                audioControls.classList.add('paused');
+            // Initialize SoundCloud widget after page load
+            const iframe = document.getElementById('backgroundMusic');
+            if (typeof SC !== 'undefined' && SC.Widget) {
+                widget = SC.Widget(iframe);
+                
+                widget.bind(SC.Widget.Events.READY, function() {
+                    widget.setVolume(30);
+                    
+                    widget.bind(SC.Widget.Events.PLAY, function() {
+                        playPauseIcon.classList.remove('fa-play');
+                        playPauseIcon.classList.add('fa-pause');
+                        audioControls.classList.remove('paused');
+                    });
+                    
+                    widget.bind(SC.Widget.Events.PAUSE, function() {
+                        playPauseIcon.classList.remove('fa-pause');
+                        playPauseIcon.classList.add('fa-play');
+                        audioControls.classList.add('paused');
+                    });
+                    
+                    widget.bind(SC.Widget.Events.FINISH, function() {
+                        widget.play();
+                    });
+                });
             }
+
+            enterBtn.addEventListener('click', function() {
+                welcomeOverlay.classList.add('hidden');
+                setTimeout(function() {
+                    welcomeOverlay.style.display = 'none';
+                    audioControls.style.display = 'flex';
+                    if (widget) {
+                        widget.play();
+                    }
+                }, 1000);
+            });
+
+            playPauseBtn.addEventListener('click', function() {
+                if (widget) {
+                    widget.isPaused(function(isPaused) {
+                        if (isPaused) {
+                            widget.play();
+                        } else {
+                            widget.pause();
+                        }
+                    });
+                }
+            });
+
+            volumeSlider.addEventListener('input', function(e) {
+                if (widget) {
+                    widget.setVolume(e.target.value);
+                }
+            });
         });
 
-        volumeSlider.addEventListener('input', (e) => {
-            audio.volume = e.target.value / 100;
-        });
-
-        audio.addEventListener('play', () => {
-            playPauseIcon.classList.remove('fa-play');
-            playPauseIcon.classList.add('fa-pause');
-            audioControls.classList.remove('paused');
-        });
-
-        audio.addEventListener('pause', () => {
-            playPauseIcon.classList.remove('fa-pause');
-            playPauseIcon.classList.add('fa-play');
-            audioControls.classList.add('paused');
-        });
-
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                document.querySelector('.preloader').classList.add('hide');
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                const preloader = document.querySelector('.preloader');
+                if (preloader) {
+                    preloader.classList.add('hide');
+                }
             }, 2500);
         });
 
