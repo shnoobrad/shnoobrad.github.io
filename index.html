@@ -833,7 +833,7 @@
         <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
     </audio>
 
-    <div class="audio-controls" id="audioControls">
+    <div class="audio-controls paused" id="audioControls">
         <button class="audio-btn" id="playPauseBtn">
             <i class="fas fa-play" id="playPauseIcon"></i>
         </button>
@@ -983,9 +983,8 @@
         <p class="footer-text">© 2025 MAJD. All rights reserved.</p>
     </footer>
 
-    <script src="https://w.soundcloud.com/player/api.js"></script>
     <script>
-        let widget = null;
+        let backgroundMusic;
         let playPauseBtn;
         let playPauseIcon;
         let volumeSlider;
@@ -993,8 +992,8 @@
         let welcomeOverlay;
         let enterBtn;
 
-        // Wait for DOM to load
         document.addEventListener('DOMContentLoaded', function() {
+            backgroundMusic = document.getElementById('backgroundMusic');
             playPauseBtn = document.getElementById('playPauseBtn');
             playPauseIcon = document.getElementById('playPauseIcon');
             volumeSlider = document.getElementById('volumeSlider');
@@ -1004,59 +1003,40 @@
 
             audioControls.style.display = 'none';
 
-            // Initialize SoundCloud widget after page load
-            const iframe = document.getElementById('backgroundMusic');
-            if (typeof SC !== 'undefined' && SC.Widget) {
-                widget = SC.Widget(iframe);
-                
-                widget.bind(SC.Widget.Events.READY, function() {
-                    widget.setVolume(30);
-                    
-                    widget.bind(SC.Widget.Events.PLAY, function() {
-                        playPauseIcon.classList.remove('fa-play');
-                        playPauseIcon.classList.add('fa-pause');
-                        audioControls.classList.remove('paused');
-                    });
-                    
-                    widget.bind(SC.Widget.Events.PAUSE, function() {
-                        playPauseIcon.classList.remove('fa-pause');
-                        playPauseIcon.classList.add('fa-play');
-                        audioControls.classList.add('paused');
-                    });
-                    
-                    widget.bind(SC.Widget.Events.FINISH, function() {
-                        widget.play();
-                    });
-                });
-            }
+            backgroundMusic.volume = 0.3;
 
             enterBtn.addEventListener('click', function() {
                 welcomeOverlay.classList.add('hidden');
                 setTimeout(function() {
                     welcomeOverlay.style.display = 'none';
                     audioControls.style.display = 'flex';
-                    if (widget) {
-                        widget.play();
-                    }
+                    backgroundMusic.play().catch(function(error) {
+                        console.log('تم منع التشغيل التلقائي:', error);
+                    });
                 }, 1000);
             });
 
             playPauseBtn.addEventListener('click', function() {
-                if (widget) {
-                    widget.isPaused(function(isPaused) {
-                        if (isPaused) {
-                            widget.play();
-                        } else {
-                            widget.pause();
-                        }
-                    });
+                if (backgroundMusic.paused) {
+                    backgroundMusic.play();
+                    playPauseIcon.classList.remove('fa-play');
+                    playPauseIcon.classList.add('fa-pause');
+                    audioControls.classList.remove('paused');
+                } else {
+                    backgroundMusic.pause();
+                    playPauseIcon.classList.remove('fa-pause');
+                    playPauseIcon.classList.add('fa-play');
+                    audioControls.classList.add('paused');
                 }
             });
 
             volumeSlider.addEventListener('input', function(e) {
-                if (widget) {
-                    widget.setVolume(e.target.value);
-                }
+                backgroundMusic.volume = e.target.value / 100;
+            });
+
+            backgroundMusic.addEventListener('ended', function() {
+                backgroundMusic.currentTime = 0;
+                backgroundMusic.play();
             });
         });
 
@@ -1133,6 +1113,7 @@
             });
         });
 
+        // تأثيرات الظهور عند السكرول
         const reveals = document.querySelectorAll('.reveal');
         
         function revealOnScroll() {
