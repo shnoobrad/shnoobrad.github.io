@@ -1088,6 +1088,92 @@
             updateCardTransform(cardWrapper.clientWidth - 70, 60);
             smoothAnimation(1500, cardWrapper.clientWidth - 70, 60);
         }
+
+        // ScrollReveal Animation
+        class ScrollRevealAnimation {
+            constructor(element, options = {}) {
+                this.element = element;
+                this.words = element.querySelectorAll('.word');
+                this.options = {
+                    baseOpacity: options.baseOpacity || 0.1,
+                    baseRotation: options.baseRotation || 5,
+                    blurStrength: options.blurStrength || 10,
+                    enableBlur: options.enableBlur !== false,
+                    threshold: options.threshold || 0.1
+                };
+                
+                this.init();
+            }
+            
+            init() {
+                // Set initial states
+                this.element.style.transformOrigin = '0% 50%';
+                this.element.style.transform = `rotate(${this.options.baseRotation}deg)`;
+                
+                this.words.forEach(word => {
+                    word.style.opacity = this.options.baseOpacity;
+                    if (this.options.enableBlur) {
+                        word.style.filter = `blur(${this.options.blurStrength}px)`;
+                    }
+                    word.style.transition = 'opacity 0.8s ease, filter 0.8s ease, transform 0.8s ease';
+                });
+                
+                // Create intersection observer
+                this.observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            this.animateIn(entry.intersectionRatio);
+                        }
+                    });
+                }, {
+                    threshold: Array.from({length: 101}, (_, i) => i / 100)
+                });
+                
+                this.observer.observe(this.element);
+            }
+            
+            animateIn(ratio) {
+                // Rotate container based on scroll
+                const rotation = this.options.baseRotation * (1 - ratio);
+                this.element.style.transform = `rotate(${rotation}deg)`;
+                
+                // Animate words
+                this.words.forEach((word, index) => {
+                    setTimeout(() => {
+                        const progress = Math.min(ratio * 2, 1);
+                        word.style.opacity = this.options.baseOpacity + (1 - this.options.baseOpacity) * progress;
+                        
+                        if (this.options.enableBlur) {
+                            const blur = this.options.blurStrength * (1 - progress);
+                            word.style.filter = `blur(${blur}px)`;
+                        }
+                        
+                        if (progress > 0.5) {
+                            word.classList.add('visible');
+                        }
+                    }, index * 50);
+                });
+            }
+            
+            destroy() {
+                if (this.observer) {
+                    this.observer.disconnect();
+                }
+            }
+        }
+        
+        // Initialize ScrollReveal for all elements
+        document.addEventListener('DOMContentLoaded', () => {
+            const scrollRevealElements = document.querySelectorAll('.scroll-reveal');
+            scrollRevealElements.forEach(element => {
+                new ScrollRevealAnimation(element, {
+                    baseOpacity: 0,
+                    enableBlur: true,
+                    baseRotation: 5,
+                    blurStrength: 10
+                });
+            });
+        });
     </script>
 </body>
 </html>
