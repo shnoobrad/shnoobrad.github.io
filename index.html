@@ -33,7 +33,12 @@
             --card-radius: 30px;
         }
 
-
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--primary);
+            color: var(--secondary);
+            overflow-x: hidden;
+        }
 
         .cursor {
             width: 20px;
@@ -66,6 +71,79 @@
         .cursor-follower.hover {
             transform: translate(-50%, -50%) scale(1.5);
             transition: transform 0.2s ease;
+        }
+
+        /* Star Border Styles */
+        .star-border-container {
+            position: relative;
+            background: var(--primary);
+            overflow: hidden;
+        }
+
+        .star-border-container::before,
+        .star-border-container::after {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--secondary), transparent);
+            animation: moveGradient 3s linear infinite;
+        }
+
+        .star-border-container::before {
+            top: 0;
+            left: -100%;
+        }
+
+        .star-border-container::after {
+            bottom: 0;
+            right: -100%;
+            animation-direction: reverse;
+        }
+
+        .border-gradient-left,
+        .border-gradient-right {
+            position: absolute;
+            width: 2px;
+            height: 200%;
+            background: linear-gradient(180deg, transparent, var(--secondary), transparent);
+            animation: moveGradientVertical 3s linear infinite;
+        }
+
+        .border-gradient-left {
+            left: 0;
+            top: -100%;
+        }
+
+        .border-gradient-right {
+            right: 0;
+            bottom: -100%;
+            animation-direction: reverse;
+        }
+
+        @keyframes moveGradient {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(50%);
+            }
+        }
+
+        @keyframes moveGradientVertical {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(50%);
+            }
+        }
+
+        .star-border-inner {
+            position: relative;
+            z-index: 1;
+            background: var(--primary);
+            padding: 2rem;
         }
 
         .preloader {
@@ -553,31 +631,62 @@
         }
 
         .skill-card {
-            padding: 2rem;
-            border: 1px solid rgba(214, 214, 214, 0.1);
-            transition: all 0.3s ease;
             position: relative;
+            background: var(--primary);
+            transition: all 0.3s ease;
             overflow: hidden;
         }
 
-        .skill-card::before {
+        .skill-card::before,
+        .skill-card::after {
             content: '';
             position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
+            width: 200%;
             height: 2px;
-            background: var(--secondary);
-            transition: left 0.3s ease;
+            background: linear-gradient(90deg, transparent, #00adee, transparent);
+            animation: moveGradient 3s linear infinite;
         }
 
-        .skill-card:hover::before {
+        .skill-card::before {
+            top: 0;
+            left: -100%;
+        }
+
+        .skill-card::after {
+            bottom: 0;
+            right: -100%;
+            animation-direction: reverse;
+        }
+
+        .skill-card .border-gradient-left,
+        .skill-card .border-gradient-right {
+            position: absolute;
+            width: 2px;
+            height: 200%;
+            background: linear-gradient(180deg, transparent, #00adee, transparent);
+            animation: moveGradientVertical 3s linear infinite;
+        }
+
+        .skill-card .border-gradient-left {
             left: 0;
+            top: -100%;
+        }
+
+        .skill-card .border-gradient-right {
+            right: 0;
+            bottom: -100%;
+            animation-direction: reverse;
+        }
+
+        .skill-card-inner {
+            position: relative;
+            z-index: 1;
+            background: var(--primary);
+            padding: 2rem;
         }
 
         .skill-card:hover {
             transform: translateY(-5px);
-            border-color: rgba(214, 214, 214, 0.3);
         }
 
         .skill-icon {
@@ -622,16 +731,101 @@
         }
 
         .contact-card {
+            position: relative;
             text-align: center;
-            padding: 3rem 2rem;
-            border: 1px solid rgba(214, 214, 214, 0.1);
+            background: var(--primary);
             transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .contact-card::before,
+        .contact-card::after {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 2px;
+            animation: moveGradient 3s linear infinite;
+        }
+
+        .contact-card::before {
+            top: 0;
+            left: -100%;
+        }
+
+        .contact-card::after {
+            bottom: 0;
+            right: -100%;
+            animation-direction: reverse;
+        }
+
+        .contact-card:nth-child(1)::before,
+        .contact-card:nth-child(1)::after {
+            background: linear-gradient(90deg, transparent, #E1306C, transparent);
+        }
+
+        .contact-card:nth-child(2)::before,
+        .contact-card:nth-child(2)::after {
+            background: linear-gradient(90deg, transparent, #5865F2, transparent);
+        }
+
+        .contact-card:nth-child(3)::before,
+        .contact-card:nth-child(3)::after {
+            background: linear-gradient(90deg, transparent, #FFFC00, transparent);
+        }
+
+        .contact-card:nth-child(4)::before,
+        .contact-card:nth-child(4)::after {
+            background: linear-gradient(90deg, transparent, #00adee, transparent);
+        }
+
+        .contact-card .border-gradient-left,
+        .contact-card .border-gradient-right {
+            position: absolute;
+            width: 2px;
+            height: 200%;
+            animation: moveGradientVertical 3s linear infinite;
+        }
+
+        .contact-card .border-gradient-left {
+            left: 0;
+            top: -100%;
+        }
+
+        .contact-card .border-gradient-right {
+            right: 0;
+            bottom: -100%;
+            animation-direction: reverse;
+        }
+
+        .contact-card:nth-child(1) .border-gradient-left,
+        .contact-card:nth-child(1) .border-gradient-right {
+            background: linear-gradient(180deg, transparent, #E1306C, transparent);
+        }
+
+        .contact-card:nth-child(2) .border-gradient-left,
+        .contact-card:nth-child(2) .border-gradient-right {
+            background: linear-gradient(180deg, transparent, #5865F2, transparent);
+        }
+
+        .contact-card:nth-child(3) .border-gradient-left,
+        .contact-card:nth-child(3) .border-gradient-right {
+            background: linear-gradient(180deg, transparent, #FFFC00, transparent);
+        }
+
+        .contact-card:nth-child(4) .border-gradient-left,
+        .contact-card:nth-child(4) .border-gradient-right {
+            background: linear-gradient(180deg, transparent, #00adee, transparent);
+        }
+
+        .contact-card-inner {
+            position: relative;
+            z-index: 1;
+            background: var(--primary);
+            padding: 3rem 2rem;
         }
 
         .contact-card:hover {
             transform: translateY(-10px);
-            border-color: rgba(214, 214, 214, 0.3);
-            background: rgba(214, 214, 214, 0.02);
         }
 
         .contact-icon {
@@ -805,45 +999,69 @@
         <h2 class="section-title">المهارات</h2>
         <div class="skills-grid">
             <div class="skill-card">
-                <i class="fab fa-html5 skill-icon"></i>
-                <h3 class="skill-name">HTML/CSS</h3>
-                <div class="skill-level">
-                    <div class="skill-progress" style="animation-delay: 0.2s; width: 90%;"></div>
+                <div class="border-gradient-left"></div>
+                <div class="border-gradient-right"></div>
+                <div class="skill-card-inner">
+                    <i class="fab fa-html5 skill-icon"></i>
+                    <h3 class="skill-name">HTML/CSS</h3>
+                    <div class="skill-level">
+                        <div class="skill-progress" style="animation-delay: 0.2s; width: 90%;"></div>
+                    </div>
                 </div>
             </div>
             <div class="skill-card">
-                <i class="fab fa-java skill-icon"></i>
-                <h3 class="skill-name">Java</h3>
-                <div class="skill-level">
-                    <div class="skill-progress" style="animation-delay: 0.4s; width: 85%;"></div>
+                <div class="border-gradient-left"></div>
+                <div class="border-gradient-right"></div>
+                <div class="skill-card-inner">
+                    <i class="fab fa-java skill-icon"></i>
+                    <h3 class="skill-name">Java</h3>
+                    <div class="skill-level">
+                        <div class="skill-progress" style="animation-delay: 0.4s; width: 85%;"></div>
+                    </div>
                 </div>
             </div>
             <div class="skill-card">
-                <i class="fas fa-database skill-icon"></i>
-                <h3 class="skill-name">SQL</h3>
-                <div class="skill-level">
-                    <div class="skill-progress" style="animation-delay: 0.6s; width: 80%;"></div>
+                <div class="border-gradient-left"></div>
+                <div class="border-gradient-right"></div>
+                <div class="skill-card-inner">
+                    <i class="fas fa-database skill-icon"></i>
+                    <h3 class="skill-name">SQL</h3>
+                    <div class="skill-level">
+                        <div class="skill-progress" style="animation-delay: 0.6s; width: 80%;"></div>
+                    </div>
                 </div>
             </div>
             <div class="skill-card">
-                <i class="fab fa-linux skill-icon"></i>
-                <h3 class="skill-name">Linux</h3>
-                <div class="skill-level">
-                    <div class="skill-progress" style="animation-delay: 0.8s; width: 75%;"></div>
+                <div class="border-gradient-left"></div>
+                <div class="border-gradient-right"></div>
+                <div class="skill-card-inner">
+                    <i class="fab fa-linux skill-icon"></i>
+                    <h3 class="skill-name">Linux</h3>
+                    <div class="skill-level">
+                        <div class="skill-progress" style="animation-delay: 0.8s; width: 75%;"></div>
+                    </div>
                 </div>
             </div>
             <div class="skill-card">
-                <i class="fas fa-shield-alt skill-icon"></i>
-                <h3 class="skill-name">Security</h3>
-                <div class="skill-level">
-                    <div class="skill-progress" style="animation-delay: 1s; width: 70%;"></div>
+                <div class="border-gradient-left"></div>
+                <div class="border-gradient-right"></div>
+                <div class="skill-card-inner">
+                    <i class="fas fa-shield-alt skill-icon"></i>
+                    <h3 class="skill-name">Security</h3>
+                    <div class="skill-level">
+                        <div class="skill-progress" style="animation-delay: 1s; width: 70%;"></div>
+                    </div>
                 </div>
             </div>
             <div class="skill-card">
-                <i class="fas fa-laptop-code skill-icon"></i>
-                <h3 class="skill-name">Front-End</h3>
-                <div class="skill-level">
-                    <div class="skill-progress" style="animation-delay: 1.2s; width: 88%;"></div>
+                <div class="border-gradient-left"></div>
+                <div class="border-gradient-right"></div>
+                <div class="skill-card-inner">
+                    <i class="fas fa-laptop-code skill-icon"></i>
+                    <h3 class="skill-name">Front-End</h3>
+                    <div class="skill-level">
+                        <div class="skill-progress" style="animation-delay: 1.2s; width: 88%;"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -853,24 +1071,40 @@
         <h2 class="section-title">التواصل</h2>
         <div class="contact-container">
             <div class="contact-card">
-                <i class="fab fa-instagram contact-icon"></i>
-                <h3 class="contact-title">Instagram</h3>
-                <a href="https://instagram.com/majd.gl" target="_blank" class="contact-link">@majd.gl</a>
+                <div class="border-gradient-bottom"></div>
+                <div class="border-gradient-top"></div>
+                <div class="contact-card-inner">
+                    <i class="fab fa-instagram contact-icon" style="color: #E1306C;"></i>
+                    <h3 class="contact-title">Instagram</h3>
+                    <a href="https://instagram.com/majd.gl" target="_blank" class="contact-link">@majd.gl</a>
+                </div>
             </div>
             <div class="contact-card">
-                <i class="fab fa-discord contact-icon"></i>
-                <h3 class="contact-title">Discord</h3>
-                <a href="https://discord.com/users/shn0ob" target="_blank" class="contact-link">shn0ob</a>
+                <div class="border-gradient-bottom"></div>
+                <div class="border-gradient-top"></div>
+                <div class="contact-card-inner">
+                    <i class="fab fa-discord contact-icon" style="color: #5865F2;"></i>
+                    <h3 class="contact-title">Discord</h3>
+                    <a href="https://discord.com/users/shn0ob" target="_blank" class="contact-link">shn0ob</a>
+                </div>
             </div>
             <div class="contact-card">
-                <i class="fab fa-snapchat contact-icon"></i>
-                <h3 class="contact-title">Snapchat</h3>
-                <a href="https://snapchat.com/add/majd.khl" target="_blank" class="contact-link">majd.khl</a>
+                <div class="border-gradient-bottom"></div>
+                <div class="border-gradient-top"></div>
+                <div class="contact-card-inner">
+                    <i class="fab fa-snapchat contact-icon" style="color: #FFFC00;"></i>
+                    <h3 class="contact-title">Snapchat</h3>
+                    <a href="https://snapchat.com/add/majd.khl" target="_blank" class="contact-link">majd.khl</a>
+                </div>
             </div>
             <div class="contact-card">
-                <i class="fab fa-steam contact-icon"></i>
-                <h3 class="contact-title">Steam</h3>
-                <a href="https://steamcommunity.com/profiles/76561198415999881/" target="_blank" class="contact-link">Shnoob</a>
+                <div class="border-gradient-bottom"></div>
+                <div class="border-gradient-top"></div>
+                <div class="contact-card-inner">
+                    <i class="fab fa-steam contact-icon" style="color: #00adee;"></i>
+                    <h3 class="contact-title">Steam</h3>
+                    <a href="https://steamcommunity.com/profiles/76561198415999881/" target="_blank" class="contact-link">Shnoob</a>
+                </div>
             </div>
         </div>
     </section>
@@ -1067,205 +1301,6 @@
             updateCardTransform(cardWrapper.clientWidth - 70, 60);
             smoothAnimation(1500, cardWrapper.clientWidth - 70, 60);
         }
-    </script>
-</body>
-</html>
-        class ScrollRevealAnimation {
-            constructor(element, options = {}) {
-                this.element = element;
-                this.words = element.querySelectorAll('.word');
-                this.options = {
-                    baseOpacity: options.baseOpacity || 0.1,
-                    baseRotation: options.baseRotation || 5,
-                    blurStrength: options.blurStrength || 10,
-                    enableBlur: options.enableBlur !== false,
-                    threshold: options.threshold || 0.1
-                };
-                
-                this.init();
-            }
-            
-            init() {
-                // Set initial states
-                this.element.style.transformOrigin = '0% 50%';
-                this.element.style.transform = `rotate(${this.options.baseRotation}deg)`;
-                
-                this.words.forEach(word => {
-                    word.style.opacity = this.options.baseOpacity;
-                    if (this.options.enableBlur) {
-                        word.style.filter = `blur(${this.options.blurStrength}px)`;
-                    }
-                    word.style.transition = 'opacity 0.8s ease, filter 0.8s ease, transform 0.8s ease';
-                });
-                
-                // Create intersection observer
-                this.observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            this.animateIn(entry.intersectionRatio);
-                        }
-                    });
-                }, {
-                    threshold: Array.from({length: 101}, (_, i) => i / 100)
-                });
-                
-                this.observer.observe(this.element);
-            }
-            
-            animateIn(ratio) {
-                // Rotate container based on scroll
-                const rotation = this.options.baseRotation * (1 - ratio);
-                this.element.style.transform = `rotate(${rotation}deg)`;
-                
-                // Animate words
-                this.words.forEach((word, index) => {
-                    setTimeout(() => {
-                        const progress = Math.min(ratio * 2, 1);
-                        word.style.opacity = this.options.baseOpacity + (1 - this.options.baseOpacity) * progress;
-                        
-                        if (this.options.enableBlur) {
-                            const blur = this.options.blurStrength * (1 - progress);
-                            word.style.filter = `blur(${blur}px)`;
-                        }
-                        
-                        if (progress > 0.5) {
-                            word.classList.add('visible');
-                        }
-                    }, index * 50);
-                });
-            }
-            
-            destroy() {
-                if (this.observer) {
-                    this.observer.disconnect();
-                }
-            }
-        }
-        
-        // Initialize ScrollReveal for all elements
-        document.addEventListener('DOMContentLoaded', () => {
-            const scrollRevealElements = document.querySelectorAll('.scroll-reveal');
-            scrollRevealElements.forEach(element => {
-                new ScrollRevealAnimation(element, {
-                    baseOpacity: 0,
-                    enableBlur: true,
-                    baseRotation: 5,
-                    blurStrength: 10
-                });
-            });
-        });
-
-        // Optimized Particles Background
-        class ParticlesBackground {
-            constructor() {
-                this.canvas = document.getElementById('particles-canvas');
-                if (!this.canvas) return;
-                
-                this.ctx = this.canvas.getContext('2d');
-                this.particles = [];
-                this.particleCount = 30; // Reduced from 200 for better performance
-                this.mouse = { x: 0, y: 0 };
-                this.animationId = null;
-                
-                this.init();
-            }
-            
-            init() {
-                this.resize();
-                this.createParticles();
-                this.animate();
-                
-                window.addEventListener('resize', () => this.resize());
-                window.addEventListener('mousemove', (e) => {
-                    this.mouse.x = e.clientX;
-                    this.mouse.y = e.clientY;
-                });
-            }
-            
-            resize() {
-                this.canvas.width = window.innerWidth;
-                this.canvas.height = window.innerHeight;
-            }
-            
-            createParticles() {
-                for (let i = 0; i < this.particleCount; i++) {
-                    this.particles.push({
-                        x: Math.random() * this.canvas.width,
-                        y: Math.random() * this.canvas.height,
-                        size: Math.random() * 2 + 1,
-                        speedX: (Math.random() - 0.5) * 0.5,
-                        speedY: (Math.random() - 0.5) * 0.5,
-                        opacity: Math.random() * 0.5 + 0.3
-                    });
-                }
-            }
-            
-            drawParticles() {
-                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-                
-                this.particles.forEach((particle, i) => {
-                    // Draw particle
-                    this.ctx.beginPath();
-                    this.ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-                    this.ctx.fillStyle = `rgba(214, 214, 214, ${particle.opacity})`;
-                    this.ctx.fill();
-                    
-                    // Draw connections
-                    this.particles.slice(i + 1).forEach(particle2 => {
-                        const dx = particle.x - particle2.x;
-                        const dy = particle.y - particle2.y;
-                        const distance = Math.sqrt(dx * dx + dy * dy);
-                        
-                        if (distance < 150) {
-                            this.ctx.beginPath();
-                            this.ctx.moveTo(particle.x, particle.y);
-                            this.ctx.lineTo(particle2.x, particle2.y);
-                            this.ctx.strokeStyle = `rgba(214, 214, 214, ${0.1 * (1 - distance / 150)})`;
-                            this.ctx.lineWidth = 0.5;
-                            this.ctx.stroke();
-                        }
-                    });
-                });
-            }
-            
-            updateParticles() {
-                this.particles.forEach(particle => {
-                    particle.x += particle.speedX;
-                    particle.y += particle.speedY;
-                    
-                    // Mouse interaction
-                    const dx = this.mouse.x - particle.x;
-                    const dy = this.mouse.y - particle.y;
-                    const distance = Math.sqrt(dx * dx + dy * dy);
-                    
-                    if (distance < 100) {
-                        const force = (100 - distance) / 100;
-                        particle.x -= (dx / distance) * force * 2;
-                        particle.y -= (dy / distance) * force * 2;
-                    }
-                    
-                    // Bounce off edges
-                    if (particle.x < 0 || particle.x > this.canvas.width) {
-                        particle.speedX = -particle.speedX;
-                    }
-                    if (particle.y < 0 || particle.y > this.canvas.height) {
-                        particle.speedY = -particle.speedY;
-                    }
-                    
-                    // Keep particles within bounds
-                    particle.x = Math.max(0, Math.min(this.canvas.width, particle.x));
-                    particle.y = Math.max(0, Math.min(this.canvas.height, particle.y));
-                });
-            }
-            
-            animate() {
-                this.drawParticles();
-                this.updateParticles();
-                this.animationId = requestAnimationFrame(() => this.animate());
-        // Initialize particles after page load
-        window.addEventListener('load', () => {
-            new ParticlesBackground();
-        });
     </script>
 </body>
 </html>
