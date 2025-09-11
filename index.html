@@ -33,28 +33,7 @@
             --card-radius: 30px;
         }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-            background: var(--primary);
-            color: var(--secondary);
-            overflow-x: hidden;
-            cursor: none;
-            position: relative;
-        }
 
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            opacity: 0.15;
-            z-index: -1;
-        }
 
         .cursor {
             width: 20px;
@@ -1173,6 +1152,127 @@
                     blurStrength: 10
                 });
             });
+        });
+
+        // Optimized Particles Background
+        class ParticlesBackground {
+            constructor() {
+                this.canvas = document.getElementById('particles-canvas');
+                if (!this.canvas) return;
+                
+                this.ctx = this.canvas.getContext('2d');
+                this.particles = [];
+                this.particleCount = 30; // Reduced from 200 for better performance
+                this.mouse = { x: 0, y: 0 };
+                this.animationId = null;
+                
+                this.init();
+            }
+            
+            init() {
+                this.resize();
+                this.createParticles();
+                this.animate();
+                
+                window.addEventListener('resize', () => this.resize());
+                window.addEventListener('mousemove', (e) => {
+                    this.mouse.x = e.clientX;
+                    this.mouse.y = e.clientY;
+                });
+            }
+            
+            resize() {
+                this.canvas.width = window.innerWidth;
+                this.canvas.height = window.innerHeight;
+            }
+            
+            createParticles() {
+                for (let i = 0; i < this.particleCount; i++) {
+                    this.particles.push({
+                        x: Math.random() * this.canvas.width,
+                        y: Math.random() * this.canvas.height,
+                        size: Math.random() * 2 + 1,
+                        speedX: (Math.random() - 0.5) * 0.5,
+                        speedY: (Math.random() - 0.5) * 0.5,
+                        opacity: Math.random() * 0.5 + 0.3
+                    });
+                }
+            }
+            
+            drawParticles() {
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                this.particles.forEach((particle, i) => {
+                    // Draw particle
+                    this.ctx.beginPath();
+                    this.ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+                    this.ctx.fillStyle = `rgba(214, 214, 214, ${particle.opacity})`;
+                    this.ctx.fill();
+                    
+                    // Draw connections
+                    this.particles.slice(i + 1).forEach(particle2 => {
+                        const dx = particle.x - particle2.x;
+                        const dy = particle.y - particle2.y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        
+                        if (distance < 150) {
+                            this.ctx.beginPath();
+                            this.ctx.moveTo(particle.x, particle.y);
+                            this.ctx.lineTo(particle2.x, particle2.y);
+                            this.ctx.strokeStyle = `rgba(214, 214, 214, ${0.1 * (1 - distance / 150)})`;
+                            this.ctx.lineWidth = 0.5;
+                            this.ctx.stroke();
+                        }
+                    });
+                });
+            }
+            
+            updateParticles() {
+                this.particles.forEach(particle => {
+                    particle.x += particle.speedX;
+                    particle.y += particle.speedY;
+                    
+                    // Mouse interaction
+                    const dx = this.mouse.x - particle.x;
+                    const dy = this.mouse.y - particle.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < 100) {
+                        const force = (100 - distance) / 100;
+                        particle.x -= (dx / distance) * force * 2;
+                        particle.y -= (dy / distance) * force * 2;
+                    }
+                    
+                    // Bounce off edges
+                    if (particle.x < 0 || particle.x > this.canvas.width) {
+                        particle.speedX = -particle.speedX;
+                    }
+                    if (particle.y < 0 || particle.y > this.canvas.height) {
+                        particle.speedY = -particle.speedY;
+                    }
+                    
+                    // Keep particles within bounds
+                    particle.x = Math.max(0, Math.min(this.canvas.width, particle.x));
+                    particle.y = Math.max(0, Math.min(this.canvas.height, particle.y));
+                });
+            }
+            
+            animate() {
+                this.drawParticles();
+                this.updateParticles();
+                this.animationId = requestAnimationFrame(() => this.animate());
+            }
+            
+            destroy() {
+                if (this.animationId) {
+                    cancelAnimationFrame(this.animationId);
+                }
+            }
+        }
+
+        // Initialize particles after page load
+        window.addEventListener('load', () => {
+            new ParticlesBackground();
         });
     </script>
 </body>
