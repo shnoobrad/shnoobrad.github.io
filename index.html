@@ -1067,8 +1067,9 @@
             updateCardTransform(cardWrapper.clientWidth - 70, 60);
             smoothAnimation(1500, cardWrapper.clientWidth - 70, 60);
         }
-
-        // ScrollReveal Animation
+    </script>
+</body>
+</html>
         class ScrollRevealAnimation {
             constructor(element, options = {}) {
                 this.element = element;
@@ -1261,15 +1262,6 @@
                 this.drawParticles();
                 this.updateParticles();
                 this.animationId = requestAnimationFrame(() => this.animate());
-            }
-            
-            destroy() {
-                if (this.animationId) {
-                    cancelAnimationFrame(this.animationId);
-                }
-            }
-        }
-
         // Initialize particles after page load
         window.addEventListener('load', () => {
             new ParticlesBackground();
